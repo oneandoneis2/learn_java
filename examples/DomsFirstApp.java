@@ -7,14 +7,18 @@ public class DomsFirstApp {
     }
 
     Dog fido = new Dog();
-    fido.name = "Fido";
+    fido.name("Fido");
     fido.bark();
     fido.chase("cat");
   }
 }
 
 class Dog {
-    String name;
+    private String name;
+
+    public void name(String s) {
+        name = s;
+    }
 
     public void bark() {
         System.out.println(name + " goes woof!");
