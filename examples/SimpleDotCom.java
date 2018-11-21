@@ -1,24 +1,27 @@
 public class SimpleDotCom {
-    int[] locationCells;
+    private ArrayList<String> locationCells;
     int numOfHits = 0;
 
-    public void setLocationCells(int[] locs) {
+    public void setLocationCells(ArrayList<String> locs) {
         locationCells = locs;
     }
 
     public String checkYourself (String stringGuess) {
-        int guess = Integer.parseInt(stringGuess);
+        // Default to miss
         String result = "miss";
-        for (int cell : locationCells) {
-            if (guess == cell) {
-                result = "hit";
-                numOfHits++;
-                break;
-            }
-        }
 
-        if (numOfHits == locationCells.length) {
-            result = "kill";
+        // Check if we hit - if not, index will be -1
+        int index = locationCells.indexOf(stringGuess);
+        if (index >= 0) {
+            // Remove what we hit
+            locationCells.remove(index);
+            // Check if the hit resulted in a kill
+            if (locationCells.isEmpty()) {
+                result = "kill";
+            }
+            else {
+                result = "hit";
+            }
         }
 
         System.out.println(result);
