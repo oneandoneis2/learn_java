@@ -82,3 +82,33 @@ Define: public interface Name {}
 Implement: public class Thing extends Parent implements Name {}
 
 interfaces only allow abstract methods so no risk of two parents defining the same method - they can both demand that the subclass implement it, so all good. Basically Java equivalents of roles/mixins. Can implement multiple interfaces.
+
+Create an object via a constructor:
+public class Duck{
+  public Duck() { // No return type needed
+    // Constructor logic goes here
+  }
+}
+
+The constructor is created automatically by the compiler, but can be manually specified to. Can have useful utilities, like keeping count of how many instances have been created, by adding this to the constructor.
+
+Constructors can also be used to define arguments to be used in creating an object. If a constructor with args is defined, the constructor will not still auto-create the null-argument constructor.
+
+When a new obejct is created, all the constructors in its inheritance tree are called: The first action of a constructor is to call super() - the compiler will insert this call itself unless you specify it yourself. This means that the subclass is always first to be invoked but last to complete. The compiler always calls super() with no arguments - specify it as the first line of the constructor to call super() with args.
+
+Can also have a call to this() instead of super() to call another contructor, e.g. a no-arg constructor can call a one-arg constructor to specify a default value.
+
+For classes that never have internal state - e.g. the Math class - there's no point instantiating an instance and taking up memory, so can just call the methods direct: Math.min(1,2); - its methods are static
+
+To make a class that can't have objects instantiated, make its constructor private.
+
+static methods can't use instance variables or call non-static methods (as these can use instance variables)
+
+A static method can still be called on an object, but shouldn't be.
+
+Setting an instance variable to static makes it a class variable instead - e.g. if you want to keep track of how many objects exist, define `private static int myCount = 0` and then have the constructor run `myCount++`
+If it weren't static, mycount would be created for every instance - no good; by setting it static it becomes bound to the class itself - all instances share it
+
+Static variables are always initialized before an instance can be created and before a static method can be run.
+
+Setting a static variable to "final" is the closest thing to a const in java: public static final double PI = 3.141592653589793; Final can also be used to stop a normal variable being redefined; stop a method being over-ridden; and define a class that can't be extended (no subclasses)
