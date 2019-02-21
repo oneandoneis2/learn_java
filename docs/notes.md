@@ -112,3 +112,21 @@ If it weren't static, mycount would be created for every instance - no good; by 
 Static variables are always initialized before an instance can be created and before a static method can be run.
 
 Setting a static variable to "final" is the closest thing to a const in java: public static final double PI = 3.141592653589793; Final can also be used to stop a normal variable being redefined; stop a method being over-ridden; and define a class that can't be extended (no subclasses)
+
+Function/method declarations:
+public|private [static] <return value> name([params]) [throws <exception name>] {<body>}
+
+If a method throws an exception, it has to declare it via "throws". If you call that method, you have to wrap it in a try/catch or the compiler will fail.
+
+public static void foo() throws Bar { do_thing(); throw new Bar() }
+try { foo() }
+catch (Bar ex) { // Handle the Bar Exception object stored in the ex variable }
+finally { // Do stuff you have to do it either case }
+
+Even if the try or catch block has a return, finally will still run - it *cannot* be bypassed.
+
+A method can declare multiple exceptions it can throw, and they all have to be handled with their own catch block.
+
+A method can declare multiple exceptions it can throw, and they all have to be handled with their own catch block. However, polymorphism applies: You can declare a superclass & it'll deal with all subclasses. e.g. a method that throws a `Dog` exception can be handled by a `catch Animal`; a method that can throw either a `Dog` or a `Cat` exception can declare `throws Animal` if it really wants. etc etc. Catch blocks must be declared from most to least specific.
+
+You can also pass exception handling up the chain by ducking it - declare it in your method just like the method that throws the exception, and it's considered "handled" by the compiler. The method that calls your method will have to handle it - so long as you don't go all the way back up to main() it's all good.
