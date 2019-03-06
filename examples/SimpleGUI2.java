@@ -1,12 +1,12 @@
 import javax.swing.*;
 import java.awt.event.*;
 
-public class SimpleGUI1 {
+public class SimpleGUI2 {
 
     MyDrawPanel panel;
 
     public static void main (String[] args) {
-        SimpleGUI1 gui = new SimpleGUI1();
+        SimpleGUI2 gui = new SimpleGUI2();
         gui.go();
     }
 
