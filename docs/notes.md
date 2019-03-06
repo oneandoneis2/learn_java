@@ -130,3 +130,7 @@ A method can declare multiple exceptions it can throw, and they all have to be h
 A method can declare multiple exceptions it can throw, and they all have to be handled with their own catch block. However, polymorphism applies: You can declare a superclass & it'll deal with all subclasses. e.g. a method that throws a `Dog` exception can be handled by a `catch Animal`; a method that can throw either a `Dog` or a `Cat` exception can declare `throws Animal` if it really wants. etc etc. Catch blocks must be declared from most to least specific.
 
 You can also pass exception handling up the chain by ducking it - declare it in your method just like the method that throws the exception, and it's considered "handled" by the compiler. The method that calls your method will have to handle it - so long as you don't go all the way back up to main() it's all good.
+
+Event-driven is done via listeners, sources and events - basically it's pub/sub. Your object registers itself with a source, e.g. a button. The button calls the object's event-handler when an event occurs & passes it info about the event.
+
+An object that is a source of events will/should have an add<action>Listener() method.
