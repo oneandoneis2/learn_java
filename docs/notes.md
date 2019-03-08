@@ -134,3 +134,8 @@ You can also pass exception handling up the chain by ducking it - declare it in 
 Event-driven is done via listeners, sources and events - basically it's pub/sub. Your object registers itself with a source, e.g. a button. The button calls the object's event-handler when an event occurs & passes it info about the event.
 
 An object that is a source of events will/should have an add<action>Listener() method.
+
+If you declare an object to be a superclass Foo, you can't call a method on it that elongs to the subclass Bar.
+e.g. if you have Animal a = new Dog(); you can't call a.bark() because Animals don't bark - dogs do. You have to cast to the right class:
+Dog d = (Dog) a;
+d.bark();
