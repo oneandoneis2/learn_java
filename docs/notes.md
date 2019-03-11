@@ -139,3 +139,5 @@ If you declare an object to be a superclass Foo, you can't call a method on it t
 e.g. if you have Animal a = new Dog(); you can't call a.bark() because Animals don't bark - dogs do. You have to cast to the right class:
 Dog d = (Dog) a;
 d.bark();
+
+Classes can be declared within classes when you want scoping benefits - just declare it within the class's curly brackets.
