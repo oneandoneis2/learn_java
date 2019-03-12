@@ -140,4 +140,4 @@ e.g. if you have Animal a = new Dog(); you can't call a.bark() because Animals d
 Dog d = (Dog) a;
 d.bark();
 
-Classes can be declared within classes when you want scoping benefits - just declare it within the class's curly brackets.
+Classes can be declared within classes when you want scoping benefits - just declare it within the class's curly brackets. Not only useful for event handling - allowing multiple handlers - but also for when your inner class inherits from a different class that the outer.
