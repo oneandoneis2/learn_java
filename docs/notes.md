@@ -141,3 +141,7 @@ Dog d = (Dog) a;
 d.bark();
 
 Classes can be declared within classes when you want scoping benefits - just declare it within the class's curly brackets. Not only useful for event handling - allowing multiple handlers - but also for when your inner class inherits from a different class that the outer.
+
+For multithreading, create a Runnable object with a run() method defining what work it has to do; pass it to a Thread object and call its start() method
+
+Threads can be running, runnable, or blocked. Putting a thread to sleep forces the scheduler to stop it being in the running state, so other threads get a go.
