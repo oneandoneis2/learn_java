@@ -145,3 +145,25 @@ Classes can be declared within classes when you want scoping benefits - just dec
 For multithreading, create a Runnable object with a run() method defining what work it has to do; pass it to a Thread object and call its start() method
 
 Threads can be running, runnable, or blocked. Putting a thread to sleep forces the scheduler to stop it being in the running state, so other threads get a go.
+
+Because sleep() can fail(???) it has to be wrapped in a TryCatch
+
+To prevent race conditions, make a method atomic so you can't e.g. check a value, then sleep, then go to change the value when somebody else may have already changed it. This is done by declaring a method `synchronized`:
+private synchronized void methodname() {
+  # check value
+  # modify value
+}
+
+Locks are per-object, not per-method: Only one synchronized method can be accessed at a time.
+
+You can also synchronize statements within a method instead of an entire method, via the synchronized keyword:
+public void go() {
+  doStuff();
+
+  synchronized(this) {
+    doThing1();
+    doThing2()
+  }
+}
+
+Deadlocks where one method gets the key for foo but also needs one for bar; whilst another method gets bar but still needs foo, are still possible.
