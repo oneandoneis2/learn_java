@@ -90,11 +90,22 @@ public class Duck{
   }
 }
 
-The constructor is created automatically by the compiler, but can be manually specified to. Can have useful utilities, like keeping count of how many instances have been created, by adding this to the constructor.
+The constructor is created automatically by the compiler, but can be manually specified too. Can have useful utilities, like keeping count of how many instances have been created, by adding this to the constructor.
+
+A constructor is called by using the "new" keyword - this is how the compiler knows you want a constructor not a method.
 
 Constructors can also be used to define arguments to be used in creating an object. If a constructor with args is defined, the constructor will not still auto-create the null-argument constructor.
 
-When a new obejct is created, all the constructors in its inheritance tree are called: The first action of a constructor is to call super() - the compiler will insert this call itself unless you specify it yourself. This means that the subclass is always first to be invoked but last to complete. The compiler always calls super() with no arguments - specify it as the first line of the constructor to call super() with args.
+Can use a constructor to make setting class variables mandatory:
+class Duck {
+  int size;
+  Duck(int s) {
+    size = s;
+  }
+}
+Duck myDuck = new Duck(42);
+
+When a new object is created, all the constructors in its inheritance tree are called: The first action of a constructor is to call super() - the compiler will insert this call itself unless you specify it yourself. This means that the subclass is always first to be invoked but last to complete. The compiler always calls super() with no arguments - specify it as the first line of the constructor to call super() with args.
 
 Can also have a call to this() instead of super() to call another contructor, e.g. a no-arg constructor can call a one-arg constructor to specify a default value.
 
@@ -167,3 +178,60 @@ public void go() {
 }
 
 Deadlocks where one method gets the key for foo but also needs one for bar; whilst another method gets bar but still needs foo, are still possible.
+
+For dealing with collections, you need to know about generics - these create type-safe collections so only desired types can be put in. Without generics, any object could go in.
+When you create, e.g., an ArrayList, you state the generic type it will accept: ArrayList<Duck> myDucks = new ArrayList<Duck>(); <- The "<Duck>" part is the generic type.
+Only an object of type <Duck> (or, if so defined, its subclasses - <CrispyPeking>, <Mallard> etc) can go in.
+
+public <D extends Duck> void getSize(ArrayList<D> list) <- Duck or subtype of Duck
+public void getSize(ArrayList<Duck>)                    <- Duck. Only Duck.
+
+Because generics could get confused by letting you create a Dog-only collection, then pass it to a method that takes a collection of Animals to which you add a Cat, the compiler won't allow it:
+
+ArrayList<Dog> dogs = new ArrayList<Dog>();
+addAnimal(dogs);
+public void addAnimal(ArrayList<Animal> animals) {
+  animals.add( new Cat() );
+}
+
+^ Illegal!
+
+public void feedAnimal(ArrayList<? extends Animal> animals) {
+  for (Animal a: animals) {
+    a.eat();
+  }
+}
+
+^ Legal, because a wildcard method like this will not allow an addition to the collection
+
+public void feedAnimal(ArrayList<? extends Animal> animals)
+^ is the same syntactically as:
+public <T extends Animal> void feedAnimal(ArrayList<T> animals)
+
+Mostly the second syntax is for use when you have more than one argument and they should both have the same type - you can re-use T
+
+
+To keep compiled code separate from source code, use the -d flag to the compiler:
+cd MyCode/source
+javac -d ../classes MyApp.java
+cd ../classes
+java Mini
+
+To make a single file with all your classes in, create a JAR (Java tar)
+cd classes
+echo "Main-Class: MyApp" > manifest.txt
+jar -cvmf manifest.txt DomsApp.jar MyApp.class
+
+Run via
+java -jar DomsApp.jar
+
+Use packages to avoid name conflicts in classes. To gaurantee uniqueness, convention is to use your reverse domain name, e.g. com.oneandoneis2.MyPkg
+In the first line of the package source code files, put the line `package com.oneandoneis2;`
+Create matching dir structure:
+mkdir -p MyProject/{classes,source}/com/oneandoneis2
+Compile with -d:
+cd MyProject/source; javac -d ../classes com/oneandoneis2/MyApp.java
+cd ../classes
+java com.oneandoneis2.MyApp
+
+-d knows how to work with the directory structure above.
